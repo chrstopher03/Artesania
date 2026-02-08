@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mercado de Artesanías de Somoto</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="13.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+body{background:#f3efe8}
+
+/* LOGIN */
+#loginBox{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#355e3b,#6b8e23);
+}
+.login{
+  background:#fff;
+  padding:30px;
+  width:90%;
+  max-width:350px;
+  border-radius:16px;
+  text-align:center;
+}
+.login input{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+.login button{
+  width:100%;
+  padding:12px;
+  background:#355e3b;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+}
+
+/* ALERTA */
+#alerta{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.alerta{
+  background:#fff;
+  padding:20px;
+  width:90%;
+  max-width:300px;
+  border-radius:14px;
+  text-align:center;
+}
+.alerta button{
+  margin-top:12px;
+  padding:10px 16px;
+  background:#355e3b;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+}
+
+/* APP */
+#app{
+  display:none;
+  padding-bottom:70px;
+}
+header{
+  background:#355e3b;
+  color:#fff;
+  padding:14px;
+  text-align:center;
+  position:relative;
+}
+header small{
+  display:block;
+  font-size:12px;
+  opacity:.9;
+}
+#logout{
+  position:absolute;
+  right:12px;
+  top:12px;
+  background:#fff;
+  color:#355e3b;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:11px;
+  cursor:pointer;
+}
+
+main{padding:16px}
+.section{
+  background:#fff;
+  padding:16px;
+  border-radius:16px;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#fff;
+  display:flex;
+  border-top:1px solid #ccc;
+}
+nav a{
+  flex:1;
+  padding:10px;
+  text-align:center;
+  text-decoration:none;
+  color:#333;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginBox">
+  <div class="login">
+    <h2>Bienvenido</h2>
+    <input id="usuario" placeholder="Nombre de usuario">
+    <input type="password" placeholder="Contraseña">
+    <button id="btnLogin">Iniciar sesión</button>
+  </div>
+</div>
+
+<!-- ALERTA -->
+<div id="alerta">
+  <div class="alerta">
+    <h3 id="mensaje"></h3>
+    <p>Mercado de Artesanías de Somoto</p>
+    <button id="btnEntrar">Entrar</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    Mercado de Artesanías de Somoto
+    <small id="nombreUsuario"></small>
+    <button id="logout">Salir</button>
+  </header>
+
+  <main>
+    <div class="section">
+      <h3>Inicio</h3>
+      <p>Bienvenido a la plataforma de emprendedores de Somoto, Madriz 🇳🇮</p>
+    </div>
+  </main>
+
+  <nav>
+    <a href="#">🏠<br>Inicio</a>
+    <a href="emprendedores.html">🧵<br>Emprendedores</a>
+    <a href="mapa.html">🗺️<br>Mapa</a>
+  </nav>
+</div>
+
+<script>
+// ENTRAR DIRECTO SI YA HAY SESIÓN
+if(localStorage.getItem("sesionIniciada") === "true"){
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("nombreUsuario").innerText =
+    "Hola, " + localStorage.getItem("usuario");
+}
+
+// LOGIN
+document.getElementById("btnLogin").addEventListener("click", function(){
+  const nombre = document.getElementById("usuario").value || "Visitante";
+
+  localStorage.setItem("sesionIniciada","true");
+  localStorage.setItem("usuario",nombre);
+
+  document.getElementById("mensaje").innerText = "Bienvenido, " + nombre;
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("alerta").style.display = "flex";
+});
+
+// ENTRAR A LA APP
+document.getElementById("btnEntrar").addEventListener("click", function(){
+  document.getElementById("alerta").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("nombreUsuario").innerText =
+    "Hola, " + localStorage.getItem("usuario");
+});
+
+// CERRAR SESIÓN
+document.getElementById("logout").addEventListener("click", function(){
+  localStorage.clear();
+  location.reload();
+});
+</script>
+
+</body>
+</html>
